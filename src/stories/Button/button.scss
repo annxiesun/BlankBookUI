@@ -1,16 +1,15 @@
 .BlankBook_button {
   font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 500;
-  border: 1px solid black;
   border-radius: 0;
   cursor: pointer;
   display: inline-block;
   line-height: 1;
-  padding: 8px;
   color: black;
   background-color: white;
   position: relative;
   background-color: transparent;
+  overflow:hidden;
 
   .fill {
     width: 100%;
@@ -19,9 +18,6 @@
     position: absolute;
     bottom: 0;
     left: 0;
-  }
-  &:hover {
-    
   }
 }
 
@@ -75,4 +71,18 @@
   height: 100%;
   width: 100%;
   opacity: 0;
+}
+
+.BlankBook_fadeNode {
+  position: absolute;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  top: 0;
+  left: 0;
+}
+
+.BlankBook_button:hover > .BlankBook_fadeNode{
+  opacity: 1;
 }
