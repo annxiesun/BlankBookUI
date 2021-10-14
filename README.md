@@ -1,13 +1,13 @@
-# blankspace-ui
+# blankbook-ui
 
 > Made with create-react-library
 
-[![NPM](https://img.shields.io/npm/v/blankspace-ui.svg)](https://www.npmjs.com/package/blankspace-ui) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/blankbook-ui.svg)](https://www.npmjs.com/package/blankbook-ui) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save blankspace-ui
+npm install --save blankbook-ui
 ```
 
 ## Usage
@@ -15,8 +15,8 @@ npm install --save blankspace-ui
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'blankspace-ui'
-import 'blankspace-ui/dist/index.css'
+import MyComponent from 'blankbook-ui'
+import 'blankbook-ui/dist/index.css'
 
 class Example extends Component {
   render() {

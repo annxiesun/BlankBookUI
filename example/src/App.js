@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { ExampleComponent } from 'blankspace-ui'
-import 'blankspace-ui/dist/index.css'
+import { ExampleComponent } from 'blankbook-ui'
+import 'blankbook-ui/dist/index.css'
 
 const App = () => {
   return <ExampleComponent text="Create React Library Example 😄" />
