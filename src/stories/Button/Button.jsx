@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { ThemeContext, PaletteContext } from '../Theme'
 import PropTypes from 'prop-types'
 import './button.scss'
+import useStyles from './style'
 
 /**
  * Primary UI component for user interaction
@@ -9,6 +11,7 @@ export const Button = ({
   className,
   label,
   size,
+  variant,
   backgroundColor,
   borderRadius,
   borderColor,
@@ -37,7 +40,6 @@ export const Button = ({
   const newOnMouseEnter = () => {
     if (onMouseEnter) onMouseEnter()
     setHover(true)
-    console.log(hover)
   }
   const newOnMouseLeave = () => {
     if (onMouseLeave) onMouseLeave()
@@ -57,73 +59,85 @@ export const Button = ({
       break
   }
 
+  const themeValue = React.useContext(ThemeContext)
+  const paletteValue = React.useContext(PaletteContext)
+  const classes = useStyles()
+
+  if (paletteValue) {
+    backgroundColor = paletteValue?.primary
+  }
+
+  if (themeValue && variant !== 'none') {
+    backgroundColor = themeValue?.button[variant]?.backgroundColor
+  }
+
   return (
-    <div>
-      <button
-        type='button'
-        className={[
-          'BlankBook_button',
-          animation === 'fade' && 'fade',
-          className
-        ].join(' ')}
-        style={{
-          border: border
-            ? `1px solid ${
-                hover && hoverBorderColor ? hoverBorderColor : borderColor
-              }`
-            : 'none',
-          color: hover && hoverBorderColor ? hoverBorderColor : borderColor,
-          transition,
-          borderRadius,
-          padding
-        }}
-        onMouseEnter={newOnMouseEnter}
-        onMouseLeave={newOnMouseLeave}
-        {...props}
-      >
-        {label}
-        {children}
-        {
-          <div className='BlankBook_fadeNode' style={{ transition }}>
-            {hoverNode}
-          </div>
-        }
-        <div className='fill' style={{ backgroundColor }} />
-        {animation !== 'none' && (
-          <div
-            className={[
-              animation === 'slide' && `BlankBook_slide-animation`,
-              animation === 'slide' && `BlankBook_slide-animation-${axis}`,
-              animation === 'slide' && `${hoverDirection}`,
-              animation === 'fade' && 'BlankBook_fade-animation'
-            ].join(' ')}
-            style={{
-              backgroundColor: hoverColor,
-              borderRadius: borderRadius - 1,
-              transition,
-              width: axis === 'y' ? hoverSize : undefined,
-              height: axis === 'x' ? hoverSize : undefined,
-              top:
-                (hoverAlign === 'start' && axis === 'x') || axis === 'y'
-                  ? 0
-                  : undefined,
-              bottom: hoverAlign === 'end' && axis === 'x' ? 0 : undefined,
-              left:
-                (hoverAlign === 'start' && axis === 'y') || axis === 'x'
-                  ? 0
-                  : undefined,
-              right: hoverAlign === 'end' && axis === 'y' ? 0 : undefined
-            }}
-          />
-        )}
-      </button>
-    </div>
+    <button
+      type='button'
+      className={[
+        classes.BlankBook_button,
+        'BlankBook_button',
+        animation === 'fade' && 'fade',
+        className
+      ].join(' ')}
+      style={{
+        border: border
+          ? `1px solid ${
+              hover && hoverBorderColor ? hoverBorderColor : borderColor
+            }`
+          : 'none',
+        color: hover && hoverBorderColor ? hoverBorderColor : borderColor,
+        transition,
+        borderRadius,
+        padding
+      }}
+      onMouseEnter={newOnMouseEnter}
+      onMouseLeave={newOnMouseLeave}
+      {...props}
+    >
+      {label}
+      {children}
+      {
+        <div className='BlankBook_fadeNode' style={{ transition }}>
+          {hoverNode}
+        </div>
+      }
+      <div className='fill' style={{ backgroundColor }} />
+      {animation !== 'none' && (
+        <div
+          className={[
+            animation === 'slide' && `BlankBook_slide-animation`,
+            animation === 'slide' && `BlankBook_slide-animation-${axis}`,
+            animation === 'slide' && `${hoverDirection}`,
+            animation === 'fade' && 'BlankBook_fade-animation'
+          ].join(' ')}
+          style={{
+            backgroundColor: hoverColor,
+            borderRadius: borderRadius,
+            transition,
+            width: axis === 'y' ? hoverSize : undefined,
+            height: axis === 'x' ? hoverSize : undefined,
+            top:
+              (hoverAlign === 'start' && axis === 'x') || axis === 'y'
+                ? 0
+                : undefined,
+            bottom: hoverAlign === 'end' && axis === 'x' ? 0 : undefined,
+            left:
+              (hoverAlign === 'start' && axis === 'y') || axis === 'x'
+                ? 0
+                : undefined,
+            right: hoverAlign === 'end' && axis === 'y' ? 0 : undefined
+          }}
+        />
+      )}
+    </button>
   )
 }
 
 Button.propTypes = {
   className: PropTypes.string,
   backgroundColor: PropTypes.string,
+  variant: PropTypes.string,
   size: PropTypes.string,
   borderColor: PropTypes.string,
   borderRadius: PropTypes.string,
@@ -144,9 +158,10 @@ Button.propTypes = {
 Button.defaultProps = {
   className: '',
   label: '',
+  variant: 'none',
   backgroundColor: null,
   size: 'medium',
-  borderRadius: 0,
+  borderRadius: '0px',
   borderColor: 'black',
   hoverDirection: 'up',
   hoverBorderColor: undefined,
