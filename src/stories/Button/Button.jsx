@@ -7,6 +7,31 @@ import useStyles from './style'
 /**
  * Primary UI component for user interaction
  */
+function setHoverAlign(hoverAlign, axis) {
+  const pos = {
+    top: undefined,
+    bottom: undefined,
+    left: undefined,
+    right: undefined
+  }
+
+  if (axis === 'x') {
+    pos.top = 0
+    if (hoverAlign === 'start') {
+      pos.left = 0
+    } else if (hoverAlign === 'end') {
+      pos.right = 0
+    }
+  } else if (axis === 'y') {
+    pos.left = 0
+    if (hoverAlign === 'start') {
+      pos.top = 0
+    } else if (hoverAlign === 'end') {
+      pos.bottom = 0
+    }
+  }
+  return pos
+}
 export const Button = ({
   className,
   label,
@@ -117,16 +142,7 @@ export const Button = ({
             transition,
             width: axis === 'y' ? hoverSize : undefined,
             height: axis === 'x' ? hoverSize : undefined,
-            top:
-              (hoverAlign === 'start' && axis === 'x') || axis === 'y'
-                ? 0
-                : undefined,
-            bottom: hoverAlign === 'end' && axis === 'x' ? 0 : undefined,
-            left:
-              (hoverAlign === 'start' && axis === 'y') || axis === 'x'
-                ? 0
-                : undefined,
-            right: hoverAlign === 'end' && axis === 'y' ? 0 : undefined
+            ...setHoverAlign(hoverAlign, axis)
           }}
         />
       )}
